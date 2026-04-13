@@ -43,18 +43,39 @@ def solver(a, b):
 
 def plot_performance(size, rep):
     sizes = sorted(set(np.random.randint(1, 1001, size)))
-    plt.plot(sizes,
-             [np.mean(list(measure_time(solver, np.random.randn(i, i), np.random.randn(i)) for _ in range(rep))) for i
-              in sizes], label="scipy")
-    plt.plot(sizes, [
+    scipy_output = [np.mean(list(measure_time(solver, np.random.randn(i, i), np.random.randn(i)) for _ in range(rep)))
+                    for i in sizes]
+    numpy_output = [
         np.mean(list(measure_time(np.linalg.solve, np.random.randn(i, i), np.random.randn(i)) for _ in range(rep))) for
-        i in sizes],
-             label="numpy")
+        i in sizes]
+    plt.plot(sizes, scipy_output, label="scipy")
+    plt.plot(sizes, numpy_output, label="numpy")
     plt.xlabel("Input length")
     plt.ylabel("Average time")
     plt.legend()
     plt.grid(True)
     plt.savefig("comparison.png")
+
+    scipy_func = np.poly1d(np.polyfit(sizes, scipy_output, 2))
+    plt.plot(sizes, scipy_func(sizes), label="scipy polyfit", linewidth=2)
+
+    numpy_func = np.poly1d(np.polyfit(sizes, numpy_output, 2))
+    plt.plot(sizes, numpy_func(sizes), label="numpy polyfit", linewidth=2)
+
+    plt.legend()
+
+    plt.savefig("comparison polyfit overlay.png")
+
+    plt.cla()
+
+    plt.plot(sizes, scipy_func(sizes), label="scipy polyfit", linewidth=2)
+    plt.plot(sizes, numpy_func(sizes), label="numpy polyfit", linewidth=2)
+    plt.xlabel("Input length")
+    plt.ylabel("Average time")
+    plt.legend()
+    plt.grid(True)
+
+    plt.savefig("comparison polyfit.png")
 
 
 if __name__ == '__main__':
