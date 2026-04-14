@@ -1,5 +1,7 @@
 # Homework assignment: numstack solvers
-
+![](https://github.com/IvanGorbache/hw-solvers/blob/main/comparison.png)
+![](https://github.com/IvanGorbache/hw-solvers/blob/main/comparison%20polyfit.png)
+![](https://github.com/IvanGorbache/hw-solvers/blob/main/comparison%20polyfit%20overlay.png)
 ראינו בהרצאה שאפשר לפתור משוואות ליניאריות בעזרת numpy.linalg.solve. ניתן לפתור משוואות כלליות גם בעזרת scipy.optimize.root.
 מטרת השאלה היא להשוות את זמני הריצה של שתי השיטות.
 
